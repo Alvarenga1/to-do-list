@@ -8,14 +8,17 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
+  static bool isDarkMode = false;
+  static var themeProvider = StateProvider((_) => isDarkMode, name: "theme");
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'To-Do List',
       debugShowCheckedModeBanner: false,
-      theme: lightTheme,
+      theme: ref.watch(themeProvider) ? darkTheme : lightTheme,
       home: const HomeScreen(),
     );
   }

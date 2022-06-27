@@ -32,7 +32,7 @@ class TaskScreenState extends ConsumerState<TaskScreen> {
               TextField(
                 controller: _titleController,
                 onChanged: (val) {
-                  ref.read(textProvider.state).state = val.isEmpty;
+                  ref.read(textProvider.notifier).state = val.isNotEmpty;
                 },
                 autofocus: true,
                 decoration: const InputDecoration(hintText: "Title"),

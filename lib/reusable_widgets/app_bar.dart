@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppBarWrapper extends StatefulWidget implements PreferredSizeWidget {
+import '../main.dart';
+
+class AppBarWrapper extends ConsumerStatefulWidget
+    implements PreferredSizeWidget {
   final String title;
   const AppBarWrapper({
     Key? key,
@@ -13,7 +17,7 @@ class AppBarWrapper extends StatefulWidget implements PreferredSizeWidget {
   AppBarWrapperState createState() => AppBarWrapperState();
 }
 
-class AppBarWrapperState extends State<AppBarWrapper> {
+class AppBarWrapperState extends ConsumerState<AppBarWrapper> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -27,7 +31,14 @@ class AppBarWrapperState extends State<AppBarWrapper> {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          IconButton(icon: const Icon(Icons.light_mode), onPressed: () {}),
+          IconButton(
+              icon: ref.watch(MyApp.themeProvider)
+                  ? const Icon(Icons.dark_mode)
+                  : const Icon(Icons.light_mode),
+              onPressed: () {
+                ref.read(MyApp.themeProvider.notifier).state =
+                    !ref.read(MyApp.themeProvider);
+              }),
         ]));
   }
 }
